@@ -14,8 +14,8 @@ function makeResponsive(){
     }
 
 //chart parameters
-    var svgWidth = 960;
-    var svgHeight = 500;
+    var svgWidth = width;
+    var svgHeight = height;
 
     var margin = {
     top: 20,
@@ -24,8 +24,8 @@ function makeResponsive(){
     left: 100
     };
 
-    var width = svgWidth - margin.left - margin.right;
-    var height = svgHeight - margin.top - margin.bottom;
+    var plotWidth = svgWidth - margin.left - margin.right;
+    var plotHeight = svgHeight - margin.top - margin.bottom;
 
     // Create an SVG wrapper, append an SVG group that will hold our chart,
     // and shift the latter by left and top margins.
@@ -55,7 +55,7 @@ function makeResponsive(){
                   d3.min(NewsData, d => d.healthcare)*.9,
                   d3.max(NewsData, d => d.healthcare)*1.1
                 ])
-          .range([chartHeight, 0]);
+          .range([plotHeight, 0]);
   
       // x scale for horizontal axis
       var xLinearScale = d3.scaleLinear()
@@ -63,7 +63,7 @@ function makeResponsive(){
                   d3.min(NewsData, d => d.poverty)*.9,
                   d3.max(NewsData, d => d.poverty)*1.1
                 ])
-          .range([0, chartWidth]);
+          .range([0, plotWidth]);
   
   
       //axis functions
@@ -76,12 +76,12 @@ function makeResponsive(){
   
       chartGroup
         .append("g")
-        .attr("transform", `translate(0, ${height})`)
+        .attr("transform", `translate(0, ${plotHeight})`)
         .call(bottomAxis);
   
     //create circles
         var circlesGroup = chartGroup.append('g').selectAll("circle")
-            .data(Data)
+            .data(NewsData)
             .enter()
             .append("circle")
             .attr("cx", d => xLinearScale(d.poverty))
@@ -97,7 +97,7 @@ function makeResponsive(){
   
     //add state abbreviations to circles
         chartGroup.append("g").selectAll("text")
-          .data(Data)
+          .data(NewsData)
           .enter()
           .append("text")
           .attr("x", d => xLinearScale(d.poverty))
@@ -138,7 +138,7 @@ function makeResponsive(){
             .append("text")
             .attr("transform", "rotate(-90)")
             .attr("y", -50)
-            .attr("x", 0 - (height / 2))
+            .attr("x", 0 - (plotHeight / 2))
             .attr("dy", "1em")
             //.attr("dx", "-13em")
             .attr("class", "axisText")
@@ -146,7 +146,7 @@ function makeResponsive(){
   
         chartGroup
           .append("text")
-          .attr("transform", `translate(${width / 2}, ${height + 20})`)
+          .attr("transform", `translate(${plotWidth / 2}, ${plotHeight + 20})`)
           // .attr('x', chartWidth /2)
           // .attr('y', chartHeight +20)
           .attr("class", "axisText")
@@ -161,3 +161,5 @@ function makeResponsive(){
 
 }
 makeResponsive();
+
+d3.select(window).on("resize", makeResponsive);
