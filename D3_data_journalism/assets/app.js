@@ -25,85 +25,86 @@ function makeResponsive(){
     var chartGroup = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-    // Initial Params
-    var chosenXAxis = "poverty";
+    d3.csv("NewsData.csv").then(function(NewsData, err) {
+        if (err) throw err;
+    // // Initial Params
+    // var chosenXAxis = "poverty";
 
-    // function used for updating x-scale var upon click on axis label
-    function xScale(NewsData, chosenXAxis) {
-    // create scales
-    var xLinearScale = d3.scaleLinear()
-    .domain([d3.min(NewsData, d => d[chosenXAxis]) * 0.8,
-        d3.max(NewsData, d => d[chosenXAxis]) * 1.2
-    ])
-    .range([0, width]);
+    // // function used for updating x-scale var upon click on axis label
+    // function xScale(NewsData, chosenXAxis) {
+    // // create scales
+    // var xLinearScale = d3.scaleLinear()
+    // .domain([d3.min(NewsData, d => d[chosenXAxis]) * 0.8,
+    //     d3.max(NewsData, d => d[chosenXAxis]) * 1.2
+    // ])
+    // .range([0, width]);
 
-    return xLinearScale;
+    // return xLinearScale;
 
-    }
+    // }
 
-    // function used for updating xAxis var upon click on axis label
-    function renderAxes(newXScale, xAxis) {
-    var bottomAxis = d3.axisBottom(newXScale);
+    // // function used for updating xAxis var upon click on axis label
+    // function renderAxes(newXScale, xAxis) {
+    // var bottomAxis = d3.axisBottom(newXScale);
 
-    xAxis.transition()
-    .duration(1000)
-    .call(bottomAxis);
+    // xAxis.transition()
+    // .duration(1000)
+    // .call(bottomAxis);
 
-    return xAxis;
-    }
+    // return xAxis;
+    // }
 
-    // function used for updating circles group with a transition to
-    // new circles
-    function renderCircles(circlesGroup, newXScale, chosenXAxis) {
+    // // function used for updating circles group with a transition to
+    // // new circles
+    // function renderCircles(circlesGroup, newXScale, chosenXAxis) {
 
-    circlesGroup.transition()
-    .duration(1000)
-    .attr("cx", d => newXScale(d[chosenXAxis]));
+    // circlesGroup.transition()
+    // .duration(1000)
+    // .attr("cx", d => newXScale(d[chosenXAxis]));
 
-    return circlesGroup;
-    }
+    // return circlesGroup;
+    // }
 
-    // function used for updating circles group with new tooltip
-    function updateToolTip(chosenXAxis, circlesGroup) {
+    // // function used for updating circles group with new tooltip
+    // function updateToolTip(chosenXAxis, circlesGroup) {
 
-    var label;
+    // var label;
 
-    if (chosenXAxis === "poverty") {
-    label = "In Poverty (%)";
-    }
-    else {
-    label = "Age (Median)";
-    }
+    // if (chosenXAxis === "poverty") {
+    // label = "In Poverty (%)";
+    // }
+    // else {
+    // label = "Age (Median)";
+    // }
 
-    var toolTip = d3.tip()
-    .attr("class", "tooltip")
-    .offset([80, -60])
-    .html(function(d) {
-        return (`${d.abbr}<br>${label} ${d[chosenXAxis]}`);
-    });
+    // var toolTip = d3.tip()
+    // .attr("class", "tooltip")
+    // .offset([80, -60])
+    // .html(function(d) {
+    //     return (`${d.abbr}<br>${label} ${d[chosenXAxis]}`);
+    // });
 
-    circlesGroup.call(toolTip);
+    // circlesGroup.call(toolTip);
 
-    circlesGroup.on("mouseover", function(data) {
-    toolTip.show(data);
-    })
-    // onmouseout event
-    .on("mouseout", function(data, index) {
-        toolTip.hide(data);
-    });
+    // circlesGroup.on("mouseover", function(data) {
+    // toolTip.show(data);
+    // })
+    // // onmouseout event
+    // .on("mouseout", function(data, index) {
+    //     toolTip.hide(data);
+    // });
 
-    return circlesGroup;
-    }
+    // return circlesGroup;
+    // }
 
     // Retrieve data from the CSV file and execute everything below
-    d3.csv("NewsData.csv").then(function(NewsData, err) {
-    if (err) throw err;
+    // d3.csv("NewsData.csv").then(function(NewsData, err) {
+    // if (err) throw err;
 
     // parse data
     NewsData.forEach(function(data) {
     data.poverty = +data.poverty;
     data.healthcare = +data.healthcare;
-    data.age = +data.age;
     });
 
     // xLinearScale function above csv import
