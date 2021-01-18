@@ -84,14 +84,9 @@ function makeResponsive(){
       .append("circle")
       .attr("cx", d => xLinearScale(d.poverty))
       .attr("cy", d => yLinearScale(d.healthcare))
-      .attr("r", "12")
-      //.attr("fill", "red")
-      .attr("opacity", ".8")
+      .attr("r", "13")
+      .attr("opacity", "1")
       .classed("stateCircle", true);
-      // .transition()
-      // .duration(1500)
-      // //.delay(1000)
-      // .attr("r", 14);
   
     //add state abbreviations to circles
     chartGroup.append("g").selectAll("text")
@@ -104,10 +99,6 @@ function makeResponsive(){
       .text(d => d.abbr)
       .attr("font-size", 11)
       .style("font-weight", "bold");
-      // .transition()
-      // .duration(1500)
-      // //.delay(1000)
-      // .attr("font-size", 12);
   
     //tooltip
     var toolTip = d3.tip()
@@ -128,7 +119,7 @@ function makeResponsive(){
     // event listener for mouse out
     .on("mouseout", function(NewsData, index) {
       toolTip.hide(NewsData)
-      d3.select(this).style("fill", "green").transition().duration(0);
+      d3.select(this).style("fill", "red").transition().duration(0);
     });
   
     // y axis labels
@@ -138,15 +129,12 @@ function makeResponsive(){
       .attr("y", -50)
       .attr("x", 0 - (plotHeight / 2))
       .attr("dy", "1em")
-      //.attr("dx", "-13em")
       .attr("class", "axisText")
       .text("Lacks Healthcare (%)");
   
     chartGroup
       .append("text")
       .attr("transform", `translate(${plotWidth / 2}, ${plotHeight + 20})`)
-      // .attr('x', plotWidth /2)
-      // .attr('y', plotHeight +20)
       .attr("class", "axisText")
       .attr("dy", "1em")
       .text("In Poverty (%)");
