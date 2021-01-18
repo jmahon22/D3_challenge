@@ -18,9 +18,9 @@ function makeResponsive(){
   var svgHeight = height;
 
   var margin = {
-    top: 20,
-    right: 40,
-    bottom: 80,
+    top: 70,
+    right: 70,
+    bottom: 70,
     left: 100
     };
 
@@ -52,7 +52,7 @@ function makeResponsive(){
     var yLinearScale = d3.scaleLinear()
       .domain([
         d3.min(NewsData, d => d.healthcare)*.9,
-        d3.max(NewsData, d => d.healthcare)*1.1
+        d3.max(NewsData, d => d.healthcare)*1
         ])
       .range([plotHeight, 0]);
   
@@ -60,7 +60,7 @@ function makeResponsive(){
     var xLinearScale = d3.scaleLinear()
       .domain([
         d3.min(NewsData, d => d.poverty)*.9,
-        d3.max(NewsData, d => d.poverty)*1.1
+        d3.max(NewsData, d => d.poverty)*1
         ])
       .range([0, plotWidth]);
   
