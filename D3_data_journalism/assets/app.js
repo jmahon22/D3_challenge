@@ -28,7 +28,7 @@ function makeResponsive(){
   var plotWidth = svgWidth - margin.left - margin.right;
   var plotHeight = svgHeight - margin.top - margin.bottom;
 
-  // Create an SVG wrapper, append an SVG group that will hold our chart,
+  // create a SVG wrapper, append a SVG group that will hold the chart,
   // and shift the latter by left and top margins.
   var svg = d3
     .select("#scatter")
@@ -36,7 +36,7 @@ function makeResponsive(){
     .attr("width", svgWidth)
     .attr("height", svgHeight);
 
-  // append an SVG group
+  // append a SVG group
   var chartGroup = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
@@ -48,7 +48,6 @@ function makeResponsive(){
         d.healthcare  = +d.healthcare;
       });
   
-      
     //y scale for veritcal axis
     var yLinearScale = d3.scaleLinear()
       .domain([
@@ -112,12 +111,13 @@ function makeResponsive(){
     chartGroup.call(toolTip);
   
     //create event listeners
+    //mouse over
     circlesGroup.on("mouseover", function(NewsData) {
       toolTip.show(NewsData, this)
       d3.select(this).style("fill", "blue").transition().duration(100);
     })
         
-    // event listener for mouse out
+    // mouse out
     .on("mouseout", function(NewsData, index) {
       toolTip.hide(NewsData)
       d3.select(this).style("fill", "red").transition().duration(0);
@@ -141,7 +141,7 @@ function makeResponsive(){
       .text("In Poverty (%)");
   
   
-    // Catching erros in console without having to catch at every line
+    // catch errors in console
     }).catch(function(error) {
       console.log(error);
     });
