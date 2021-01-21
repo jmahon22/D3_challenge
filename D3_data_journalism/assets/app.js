@@ -1,14 +1,15 @@
 // @TODO: YOUR CODE HERE!
 function makeResponsive(){
 
-  // if the SVG area isn't empty when the browser loads, remove & replace it with a resized version of the chart
+  // if the SVG area isn't empty when the browser loads, remove & replace it with 
+  //a resized version of the chart
   var svgArea = d3.select("body").select("svg");
 
   //setup chart parameters
   var width = parseInt(d3.select("#scatter").style("width"))
   var height = (width - width /4)
 
-  //clear SVG if Not Empty
+  //clear SVG if not empty
     if (!svgArea.empty()) {
       svgArea.remove();
     }
@@ -22,7 +23,7 @@ function makeResponsive(){
     right: 70,
     bottom: 70,
     left: 100
-    };
+  };
 
   var plotWidth = svgWidth - margin.left - margin.right;
   var plotHeight = svgHeight - margin.top - margin.bottom;
